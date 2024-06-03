@@ -12,20 +12,20 @@ class ShoppingCart with ChangeNotifier {
     notifyListeners();
   }
 
-  .void removeAll() {
+  void removeAll() {
     _shoppingList.clear();
     cartTotal = 0;
     notifyListeners();
   }
 
-  .void removeItem(String name) {
+  void removeItem(String name) {
     for (int i = 0; i < _shoppingList.length; i++) {
       if (_shoppingList[i].name == name) {
         cartTotal = cartTotal - _shoppingList[i].price;
         _shoppingList.remove(_shoppingList[i]);
         break;
       }
-    }
+    } 
     notifyListeners();
   }
 }
