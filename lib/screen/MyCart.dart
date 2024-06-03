@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import "package:flutter/material.dart";
 import "../model/Item.dart";
 import "package:provider/provider.dart";
@@ -9,23 +11,34 @@ class MyCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("My Cart")),
+      appBar: AppBar(title: const Text("My Cart"), backgroundColor: Colors.blue,),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           getItems(context),
+          computeCost(),
           const Divider(height: 4, color: Colors.black),
+          TextButton(
+            child: const Text("Go back to Product Catalog"),
+            onPressed: () {
+              Navigator.pushNamed(context, "/products");
+            },
+          ),
           Flexible(
             child: Center(
               child: Row(
-                mainAxisAlignment:
-MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
               ElevatedButton(
                 onPressed: () {
                   context.read<ShoppingCart>().removeAll();
                 },
                 child: const Text("Reset")),
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, "/checkout");
+                },
+                child: const Text("Checkout")),
             ]))),
           TextButton(
             child: const Text("Go back to Product Catalog"),
@@ -56,30 +69,32 @@ Widget getItems(BuildContext context) {
             trailing: IconButton(
               icon: const Icon(Icons.delete),
               onPressed: () {
-                productname = products[index].name;
-context.read&lt;ShoppingCart&gt;().removeItem(productname);
+                productname = products[index].name; context.read<ShoppingCart>().removeItem(productname);
 
-                if (products.isNotEmpty) {
-ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                content: Text(&quot;$productname removed!&quot;),
+                if (products.isNotEmpty) {ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text("$productname removed!"),
                 duration:
-                  const Duration(seconds: 1,
-milliseconds: 100),
+                  const Duration(seconds: 1, milliseconds: 100),
               ));
             } else {
               ScaffoldMessenger.of(context)
                 .showSnackBar(const SnackBar(
-              content: Text(&quot;Cart Empty!&quot;),
-              duration: Duration(seconds: 1,
-milliseconds: 100),
+              content: Text("Cart Empty!"),
+              duration: Duration(seconds: 1, milliseconds: 100),
             ));
           }
         },
       ),
     );
   },
-)),
-],
-));
+  )),
+  ],
+    ));
+  }
 }
+
+Widget computeCost() {
+  return Consumer<ShoppingCart>(builder: (context, cart, child) {
+    return Text("Total: ${cart.cartTotal}");
+  });
 }

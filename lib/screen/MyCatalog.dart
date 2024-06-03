@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import '../model/Item.dart';
 import 'package:provider/provider.dart';
@@ -19,7 +21,7 @@ List<Item> productsCatalog = [
 @override
 Widget build(BuildContext context) {
   return Scaffold(
-    appBar: AppBar(title: const Text(&quot;My Catalog&quot;)),
+    appBar: AppBar(title: const Text("My Catalog"), backgroundColor: Colors.blue,),
     body: ListView.builder(
       itemBuilder: (BuildContext context, int index) {
         return ListTile(
@@ -45,7 +47,7 @@ Widget build(BuildContext context) {
     floatingActionButton: FloatingActionButton(
       child: const Icon(Icons.shopping_cart),
       onPressed: () {
-        Navigator.pushNamed(context, &quot;/cart&quot;);
+        Navigator.pushNamed(context, "/cart");
       },
     ));
   }
